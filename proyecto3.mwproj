@@ -11,7 +11,7 @@
         <d4p1:guid>9d937a65-4580-4253-a95e-d9e7d87d34c1</d4p1:guid>
         <d4p1:guid>2da39a54-c390-4b49-a5ac-0ae2e1737e7a</d4p1:guid>
         <d4p1:guid>f20d1ab5-46d8-4240-af8a-a52f7dce6c05</d4p1:guid>
-        <d4p1:guid>f21c44ba-38d6-4f9b-bf62-fec9adf2fee0</d4p1:guid>
+        <d4p1:guid>3f272106-ceb0-44c7-83f6-d04c8d51bc34</d4p1:guid>
         <d4p1:guid>4b19a667-e3d3-433e-8506-6383d91fec6d</d4p1:guid>
         <d4p1:guid>5d158b49-116b-4528-8fb4-03110fa3b2e8</d4p1:guid>
         <d4p1:guid>50b949ce-743b-40cf-b736-adc7ffc78978</d4p1:guid>
@@ -266,7 +266,16 @@
     </XmlLayer>
     <XmlLayer>
       <ColorSchemeCaption />
-      <CustomObjects />
+      <CustomObjects>
+        <XmlCustomObject>
+          <Guid>7b9df651-4b8b-4aa8-a4a9-c1463a35dac7</Guid>
+          <Object>
+            <SymbologyMetadata xmlns="">
+              <Initialized>true</Initialized>
+            </SymbologyMetadata>
+          </Object>
+        </XmlCustomObject>
+      </CustomObjects>
       <Expanded>true</Expanded>
       <Guid>f20d1ab5-46d8-4240-af8a-a52f7dce6c05</Guid>
       <HideFromLegend>false</HideFromLegend>
@@ -281,7 +290,7 @@
       <LayerType>Shapefile</LayerType>
       <Name>canton_san_carlos</Name>
       <OcxLayer>
-        <Layer LayerType="Shapefile" LayerName="canton_san_carlos" LayerVisible="0" LayerKey="" MaxVisibleZoom="20" Filename="" xmlns="">
+        <Layer LayerType="Shapefile" LayerName="canton_san_carlos" LayerVisible="1" LayerKey="" MaxVisibleZoom="20" Filename="" xmlns="">
           <ShapefileClass>
             <DefaultDrawingOptions FillColor="14083553" LineColor="9868950" RotationExpression="" />
             <ShapefileCategoriesClass ClassificationField="-1" />
@@ -297,9 +306,18 @@
     </XmlLayer>
     <XmlLayer>
       <ColorSchemeCaption />
-      <CustomObjects />
+      <CustomObjects>
+        <XmlCustomObject>
+          <Guid>7b9df651-4b8b-4aa8-a4a9-c1463a35dac7</Guid>
+          <Object>
+            <SymbologyMetadata xmlns="">
+              <Initialized>true</Initialized>
+            </SymbologyMetadata>
+          </Object>
+        </XmlCustomObject>
+      </CustomObjects>
       <Expanded>true</Expanded>
-      <Guid>f21c44ba-38d6-4f9b-bf62-fec9adf2fee0</Guid>
+      <Guid>3f272106-ceb0-44c7-83f6-d04c8d51bc34</Guid>
       <HideFromLegend>false</HideFromLegend>
       <Identity xmlns:d4p1="http://schemas.datacontract.org/2004/07/MW5.Api.Concrete">
         <d4p1:Connection i:nil="true" />
@@ -312,9 +330,9 @@
       <LayerType>Shapefile</LayerType>
       <Name>distritos_san_carlos</Name>
       <OcxLayer>
-        <Layer LayerType="Shapefile" LayerName="distritos_san_carlos" LayerVisible="0" LayerKey="" MaxVisibleZoom="20" Filename="" xmlns="">
+        <Layer LayerType="Shapefile" LayerName="distritos_san_carlos" LayerVisible="1" LayerKey="" MaxVisibleZoom="20" Filename="" xmlns="">
           <ShapefileClass>
-            <DefaultDrawingOptions FillColor="13285603" LineColor="9868950" RotationExpression="" />
+            <DefaultDrawingOptions FillColor="12965861" LineColor="9868950" RotationExpression="" />
             <ShapefileCategoriesClass ClassificationField="-1" />
             <LabelsClass Generated="0" Positioning="1" TextRenderingHint="3" />
             <ChartsClass />
@@ -324,7 +342,7 @@
           </ShapefileClass>
         </Layer>
       </OcxLayer>
-      <Selected>false</Selected>
+      <Selected>true</Selected>
     </XmlLayer>
     <XmlLayer>
       <ColorSchemeCaption />
@@ -343,7 +361,7 @@
       <LayerType>Shapefile</LayerType>
       <Name>carreteras_san_carlos</Name>
       <OcxLayer>
-        <Layer LayerType="Shapefile" LayerName="carreteras_san_carlos" LayerVisible="0" LayerKey="" MaxVisibleZoom="20" Filename="" xmlns="">
+        <Layer LayerType="Shapefile" LayerName="carreteras_san_carlos" LayerVisible="1" LayerKey="" MaxVisibleZoom="20" Filename="" xmlns="">
           <ShapefileClass>
             <DefaultDrawingOptions FillColor="16777215" LineColor="7763861" RotationExpression="" />
             <ShapefileCategoriesClass ClassificationField="-1" />
@@ -383,7 +401,7 @@
       <LayerType>Shapefile</LayerType>
       <Name>rios_san_carlos</Name>
       <OcxLayer>
-        <Layer LayerType="Shapefile" LayerName="rios_san_carlos" LayerVisible="0" LayerKey="" MaxVisibleZoom="20" Filename="" xmlns="">
+        <Layer LayerType="Shapefile" LayerName="rios_san_carlos" LayerVisible="1" LayerKey="" MaxVisibleZoom="20" Filename="" xmlns="">
           <ShapefileClass>
             <DefaultDrawingOptions FillColor="16777215" LineColor="5987681" RotationExpression="" />
             <ShapefileCategoriesClass ClassificationField="-1" />
@@ -414,7 +432,7 @@
       <LayerType>Shapefile</LayerType>
       <Name>poblados_san_carlos</Name>
       <OcxLayer>
-        <Layer LayerType="Shapefile" LayerName="poblados_san_carlos" LayerVisible="0" LayerKey="" MaxVisibleZoom="20" Filename="" xmlns="">
+        <Layer LayerType="Shapefile" LayerName="poblados_san_carlos" LayerVisible="1" LayerKey="" MaxVisibleZoom="20" Filename="" xmlns="">
           <ShapefileClass>
             <DefaultDrawingOptions FillColor="3563572" LineColor="9868950" RotationExpression="" />
             <ShapefileCategoriesClass ClassificationField="-1" />
@@ -445,7 +463,7 @@
       <LayerType>Shapefile</LayerType>
       <Name>poblprinc_san_carlos</Name>
       <OcxLayer>
-        <Layer LayerType="Shapefile" LayerName="poblprinc_san_carlos" LayerVisible="0" LayerKey="" MaxVisibleZoom="20" Filename="" xmlns="">
+        <Layer LayerType="Shapefile" LayerName="poblprinc_san_carlos" LayerVisible="1" LayerKey="" MaxVisibleZoom="20" Filename="" xmlns="">
           <ShapefileClass>
             <DefaultDrawingOptions FillColor="3572588" LineColor="9868950" RotationExpression="" />
             <ShapefileCategoriesClass ClassificationField="-1" />
@@ -476,7 +494,7 @@
       <LayerType>Shapefile</LayerType>
       <Name>hitos_san_carlos</Name>
       <OcxLayer>
-        <Layer LayerType="Shapefile" LayerName="hitos_san_carlos" LayerVisible="0" LayerKey="" MaxVisibleZoom="20" Filename="" xmlns="">
+        <Layer LayerType="Shapefile" LayerName="hitos_san_carlos" LayerVisible="1" LayerKey="" MaxVisibleZoom="20" Filename="" xmlns="">
           <ShapefileClass>
             <DefaultDrawingOptions FillColor="7877251" LineColor="9868950" RotationExpression="" />
             <ShapefileCategoriesClass ClassificationField="-1" />
@@ -488,16 +506,16 @@
           </ShapefileClass>
         </Layer>
       </OcxLayer>
-      <Selected>true</Selected>
+      <Selected>false</Selected>
     </XmlLayer>
   </Layers>
   <Locator i:nil="true" />
   <Map>
     <Envelope>
-      <MaxX>-79.989179792387233</MaxX>
-      <MaxY>11.497388836461047</MaxY>
-      <MinX>-86.856066893090215</MinX>
-      <MinY>9.7570579209587187</MinY>
+      <MaxX>-83.962682427709225</MaxX>
+      <MaxY>11.112053938987936</MaxY>
+      <MinX>-85.2173395993505</MinX>
+      <MinY>10.191297466251195</MinY>
     </Envelope>
     <Projection>GEOGCS["WGS 84",DATUM["WGS_1984",SPHEROID["WGS 84",6378137,298.257223563,AUTHORITY["EPSG","7030"]],AUTHORITY["EPSG","6326"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.01745329251994328,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4326"]]</Projection>
     <TileProviderId>0</TileProviderId>
