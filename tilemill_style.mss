@@ -84,31 +84,11 @@ Map {
   }
 }
 
-/* ===== ÁREAS VERDES - BORDES VERDES MÁS VISIBLES ===== */
+/* ===== ÁREAS VERDES ===== */
 #zonas_verdes_san_carlos {
   [zoom >= 10] {
-    polygon-fill: #2ecc71;
-    polygon-opacity: 0.15;
-    line-color: #27ae60;
-    line-width: 1.2; /* Aumentado de 0.8 a 1.2 */
-    line-opacity: 0.7; /* Aumentado de 0.4 a 0.7 */
-    
-    [landuse = "grass"] {
-      polygon-fill: #a3e4d7;
-      line-color: #58d68d; /* Verde más vibrante */
-      line-width: 1;
-    }
-    [landuse = "forest"] {
-      polygon-fill: #186a3b;
-      line-color: #145a32;
-      polygon-opacity: 0.2;
-      line-width: 1.5; /* Borde más grueso para bosques */
-    }
-    [landuse = "recreation_ground"] {
-      polygon-fill: #82e0aa;
-      line-color: #27ae60;
-      line-width: 1.2;
-    }
+    marker-file: url("iconos\zona_verde.svg");
+    marker-fill: #2ecc71;
     
     ::label[zoom >= 12] {
       text-name: "[name]";
@@ -123,14 +103,11 @@ Map {
   }
 }
 
-/* ===== PLAZAS - BORDES VERDES MÁS VISIBLES ===== */
+/* ===== PLAZAS ===== */
 #plazas_san_carlos {
   [zoom >= 11] {
-    polygon-fill: #f9e79f;
-    polygon-opacity: 0.2;
-    line-color: #27ae60; /* Cambiado de amarillo a verde */
-    line-width: 1.2; /* Aumentado de 1 a 1.2 */
-    line-opacity: 0.8; /* Aumentado de 0.6 a 0.8 */
+    marker-file: url("iconos\plaza.svg");
+    marker-fill: #f9e79f;
     
     ::label[zoom >= 13] {
       text-name: "'Plaza'";
@@ -144,14 +121,11 @@ Map {
   }
 }
 
-/* ===== PARQUES - BORDES VERDES MÁS VISIBLES ===== */
+/* ===== PARQUES ===== */
 #parques_san_carlos {
   [zoom >= 10] {
-    polygon-fill: #58d68d;
-    polygon-opacity: 0.2;
-    line-color: #27ae60;
-    line-width: 1.5; /* Aumentado de 1 a 1.5 */
-    line-opacity: 0.8; /* Aumentado de 0.6 a 0.8 */
+    marker-file: url("iconos\parque.svg");
+    marker-fill: #58d68d;
     
     ::label[zoom >= 12] {
       text-name: "[name]";
@@ -225,6 +199,7 @@ Map {
 /* ===== POBLADOS ===== */
 #poblprinc_san_carlos {
   [zoom >= 9] {
+    marker-file: url("iconos\poblados_principales.svg");
     marker-fill: #8e44ad;
     marker-line-color: #fff;
     marker-line-width: 1.5;
@@ -252,6 +227,7 @@ Map {
 
 #poblados_san_carlos {
   [zoom >= 12] {
+    marker-file: url("iconos\poblados.svg");
     marker-fill: #27ae60;
     marker-line-color: #fff;
     marker-line-width: 0.8;
@@ -286,14 +262,14 @@ Map {
 /* ===== HOSPITALES ===== */
 #hospitales_san_carlos {
   [zoom >= 12] {
-    //marker-file: url(symbols/hospital.svg);
-    marker-width: 14;
+    marker-file: url("iconos\hospitales.svg");
+    marker-width: 18;
     marker-opacity: 1;
     marker-fill: #e74c3c;
     marker-line-color: #c0392b;
     
-    [zoom >= 13] { marker-width: 16; }
-    [zoom >= 14] { marker-width: 18; }
+    [zoom >= 13] { marker-width: 20; }
+    [zoom >= 14] { marker-width: 22; }
     
     ::label[zoom >= 13] {
       text-name: "[NOMBRE]";
@@ -315,6 +291,7 @@ Map {
 /* ===== ESCUELAS ===== */
 #escuela_san_carlos {
   [zoom >= 13] {
+    marker-file: url("iconos\escuelas.svg");
     marker-width: 12;
     marker-opacity: 0.9;
     marker-allow-overlap: false;
@@ -353,6 +330,7 @@ Map {
 /* ===== CLÍNICAS ===== */
 #clinicas_san_carlos {
   [zoom >= 13] {
+    marker-file: url("iconos\clinicas.svg");
     marker-width: 12;
     marker-opacity: 0.9;
     
@@ -385,6 +363,7 @@ Map {
 /* ===== HOTELES ===== */
 #hoteles_san_carlos {
   [zoom >= 13] {
+    marker-file: url("iconos\hoteles.svg");
     marker-width: 12;
     marker-opacity: 0.9;
     
@@ -429,6 +408,7 @@ Map {
 /* ===== GASOLINERAS ===== */
 #gasolineras_san_carlos {
   [zoom >= 13] {
+    marker-file: url("iconos\gasolineras.svg");
     marker-width: 12;
     marker-opacity: 0.9;
     marker-fill: #2c3e50;
@@ -454,6 +434,7 @@ Map {
 /* ===== AGENTES BANCARIOS ===== */
 #agentes_bancarios_san_carlos {
   [zoom >= 13] {
+    marker-file: url("iconos\bancos.svg");
     marker-width: 12;
     marker-opacity: 0.9;
     marker-allow-overlap: false;
@@ -519,7 +500,7 @@ Map {
 /* ===== COMERCIOS (Puntos) ===== */
 #comercios_san_carlos {
   [zoom >= 14] {
-    //marker-file: url(symbols/shop.svg);
+    marker-file: url("iconos\tiendas.svg");
     marker-width: 10;
     marker-opacity: 0.7;
     marker-fill: #e74c3c;
