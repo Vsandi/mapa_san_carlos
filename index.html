@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Interactivo - San Carlos, Alajuela</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Panel de información */
+        .info-panel {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            max-width: 320px;
+            z-index: 1000;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .info-panel h2 {
+            font-size: 20px;
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+
+        .info-panel h3 {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-bottom: 15px;
+            font-weight: normal;
+        }
+
+        .info-panel p {
+            font-size: 13px;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .info-panel .authors {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-bottom: 15px;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+        }
+
+        /* Leyenda */
+        .legend {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .legend h4 {
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #2c3e50;
+        }
+
+        .legend-section {
+            margin-bottom: 15px;
+        }
+
+        .legend-section h5 {
+            font-size: 12px;
+            font-weight: bold;
+            color: #34495e;
+            margin-bottom: 5px;
+            margin-top: 10px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .legend-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+            border-radius: 3px;
+            flex-shrink: 0;
+        }
+
+        .legend-line {
+            width: 30px;
+            height: 3px;
+            margin-right: 8px;
+            flex-shrink: 0;
+        }
+
+        .legend-circle {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+            flex-shrink: 0;
+        }
+
+        /* Botón toggle para panel móvil */
+        .toggle-panel {
+            position: absolute;
+            top: 80px;
+            right: 20px;
+            background: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            cursor: pointer;
+            z-index: 1000;
+            font-size: 14px;
+            display: none;
+        }
+
+        /* Control de escala personalizado */
+        .leaflet-control-scale {
+            font-size: 11px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .info-panel {
+                top: auto;
+                bottom: -100%;
+                right: 0;
+                left: 0;
+                max-width: 100%;
+                border-radius: 20px 20px 0 0;
+                max-height: 70vh;
+                transition: bottom 0.3s ease;
+            }
+
+            .info-panel.active {
+                bottom: 0;
+            }
+
+            .toggle-panel {
+                display: block;
+            }
+        }
+
+        /* Créditos */
+        .credits {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 11px;
+            color: #555;
+            z-index: 999;
+        }
+
+        .credits a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .credits a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Mapa -->
+    <div id="map"></div>
+
+    <!-- Botón toggle para móvil -->
+    <button class="toggle-panel" onclick="togglePanel()">ℹ️ Información</button>
+
+    <!-- Panel de información -->
+    <div class="info-panel" id="infoPanel">
+        <h2>Mapa de San Carlos</h2>
+        <h3>Alajuela, Costa Rica</h3>
+        
+        <p>
+            Mapa interactivo en mosaico del cantón de San Carlos con información 
+            geográfica, servicios, comercios y puntos de interés.
+        </p>
+
+        <div class="authors">
+            <strong>Proyecto realizado por:</strong><br>
+            Dylan Cachón &amp; Victoria Sandí<br>
+            <em>Tecnológico de Costa Rica - 2025</em>
+        </div>
+
+        <!-- Leyenda -->
+        <div class="legend">
+            <h4>Leyenda</h4>
+
+            <!-- Servicios de salud -->
+            <div class="legend-section">
+                <h5>Salud</h5>
+                <div class="legend-item">
+                    <div class="legend-icon" style="background: #d7191c;">🏥</div>
+                    <span>Hospitales</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-icon" style="background: #91bfdb;">⛑️</div>
+                    <span>Clínicas</span>
+                </div>
+            </div>
+
+            <!-- Educación -->
+            <div class="legend-section">
+                <h5>Educación</h5>
+                <div class="legend-item">
+                    <div class="legend-icon" style="background: #4575b4;">🎓</div>
+                    <span>Escuelas</span>
+                </div>
+            </div>
+
+            <!-- Servicios -->
+            <div class="legend-section">
+                <h5>Servicios</h5>
+                <div class="legend-item">
+                    <div class="legend-icon" style="background: #238b45;">🏦</div>
+                    <span>Bancos</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-icon" style="background: #fee090;">⛽</div>
+                    <span>Gasolineras</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-icon" style="background: #91bfdb;">🏨</div>
+                    <span>Hoteles</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-icon" style="background: #c994c7;">🏪</div>
+                    <span>Comercios</span>
+                </div>
+            </div>
+
+            <!-- Carreteras -->
+            <div class="legend-section">
+                <h5>Infraestructura</h5>
+                <div class="legend-item">
+                    <div class="legend-line" style="background: #fdb863; height: 4px;"></div>
+                    <span>Carreteras Nacionales</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-line" style="background: #fd8d3c; height: 3px; border-top: 2px dashed #fd8d3c;"></div>
+                    <span>Carreteras Cantonales</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-line" style="background: #999; height: 2px;"></div>
+                    <span>Caminos Vecinales</span>
+                </div>
+            </div>
+
+            <!-- Hidrografía -->
+            <div class="legend-section">
+                <h5>Hidrografía</h5>
+                <div class="legend-item">
+                    <div class="legend-line" style="background: #4a9fd6; height: 3px;"></div>
+                    <span>Ríos</span>
+                </div>
+            </div>
+
+            <!-- Zonas verdes -->
+            <div class="legend-section">
+                <h5>Áreas Verdes</h5>
+                <div class="legend-item">
+                    <div class="legend-icon" style="background: #8fbf8f;"></div>
+                    <span>Parques</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-icon" style="background: #b8f5b8;"></div>
+                    <span>Zonas Verdes</span>
+                </div>
+            </div>
+
+            <!-- Poblados -->
+            <div class="legend-section">
+                <h5>Poblados</h5>
+                <div class="legend-item">
+                    <div class="legend-circle" style="background: #b30000; width: 14px; height: 14px;"></div>
+                    <span>Cabeceras Distritales</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-circle" style="background: #e31a1c; width: 10px; height: 10px;"></div>
+                    <span>Poblados</span>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #eee; font-size: 11px; color: #7f8c8d;">
+            <strong>Instrucciones:</strong><br>
+            • Usa los controles + / - para hacer zoom<br>
+            • Arrastra para moverte por el mapa<br>
+            • Haz clic en elementos para ver información
+        </div>
+    </div>
+
+    <!-- Créditos -->
+    <div class="credits">
+        Datos: <a href="https://www.openstreetmap.org/copyright" target="_blank">© OpenStreetMap</a> | 
+        IGN Costa Rica
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script>
+        // ========================================
+        // CONFIGURACIÓN DEL MAPA
+        // ========================================
+
+        // Crear el mapa centrado en San Carlos
+        const map = L.map('map', {
+            center: [10.47, -84.43],  // Centro de San Carlos
+            zoom: 10,
+            minZoom: 8,
+            maxZoom: 16,
+            zoomControl: true
+        });
+
+        // ========================================
+        // CAPA DE TILES PERSONALIZADA
+        // ========================================
+
+        // Tiles generados por TileMill
+        const customTiles = L.tileLayer('tiles/{z}/{x}/{y}.png', {
+            attribution: 'Dylan Cachón & Victoria Sandí | TEC 2025',
+            minZoom: 8,
+            maxZoom: 16,
+            tileSize: 256,
+            errorTileUrl: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=='
+        }).addTo(map);
+
+        // Manejo de errores de tiles
+        customTiles.on('tileerror', function(error, tile) {
+            console.log('Error loading tile:', error);
+        });
+
+        // ========================================
+        // CONTROLES DEL MAPA
+        // ========================================
+
+        // Control de escala (solo métrico)
+        L.control.scale({
+            position: 'bottomright',
+            imperial: false,
+            metric: true
+        }).addTo(map);
+
+        // ========================================
+        // FUNCIONES AUXILIARES
+        // ========================================
+
+        // Toggle del panel en móvil
+        function togglePanel() {
+            const panel = document.getElementById('infoPanel');
+            panel.classList.toggle('active');
+        }
+
+        // Cerrar panel al hacer clic en el mapa (móvil)
+        map.on('click', function() {
+            if (window.innerWidth <= 768) {
+                const panel = document.getElementById('infoPanel');
+                panel.classList.remove('active');
+            }
+        });
+
+        // ========================================
+        // EVENTOS Y COMPORTAMIENTO
+        // ========================================
+
+        // Mensaje de bienvenida
+        console.log('Mapa de San Carlos cargado correctamente');
+        console.log('Proyecto 3 - SIG | TEC Costa Rica');
+        console.log('Dylan Cachón & Victoria Sandí');
+
+        // Ajustar vista del mapa al redimensionar ventana
+        window.addEventListener('resize', function() {
+            map.invalidateSize();
+        });
+
+        // Mostrar coordenadas al hacer clic (útil para debugging)
+        map.on('click', function(e) {
+            console.log('Coordenadas:', e.latlng.lat.toFixed(5), ',', e.latlng.lng.toFixed(5));
+        });
+
+        // ========================================
+        // OPCIONAL: MARCADORES O POPUPS
+        // ========================================
+
+        // Puedes agregar marcadores adicionales aquí si lo necesitas
+        // Ejemplo:
+        /*
+        L.marker([10.47, -84.43])
+            .addTo(map)
+            .bindPopup('<b>Centro de San Carlos</b><br>Ciudad Quesada')
+            .openPopup();
+        */
+
+        // ========================================
+        // INFORMACIÓN DEL PROYECTO
+        // ========================================
+
+        // Detectar cuando el mapa está completamente cargado
+        map.whenReady(function() {
+            console.log('✓ Mapa listo');
+            console.log('✓ Tiles configurados: tiles/{z}/{x}/{y}.png');
+            console.log('✓ Centro: San Carlos [10.47, -84.43]');
+            console.log('✓ Zoom disponible: 8-16');
+        });
+    </script>
+</body>
+</html>
