@@ -1,0 +1,14 @@
+# Elevación   R   G   B     Color HEX    Descripción
+8.484   8   81  156    #08519c  Azul marino (mínimo real - valles)
+200     64  125 186    #407dba  Azul medio
+400     107 174 214    #6baed6  Azul claro
+600     158 202 225    #9ecae1  Azul muy claro
+800     199 233 192    #c7e9c0  Verde-azulado (transición)
+1000    161 217 155    #a1d99b  Verde claro (antes era #bdd7e7 azul)
+1200    116 196 118    #74c476  Verde medio
+1400    65  171 93     #41ab5d  Verde oscuro
+1600    254 217 118    #fed976  Amarillo-naranja (transición)
+1800    253 174 97     #fdae61  Naranja claro
+2000    227 26  28     #e31a1c  Rojo
+2100    215 48  39     #d73027  Rojo oscuro
+2264.139 128 0   38    #800026  Rojo vino (máximo real - picos)

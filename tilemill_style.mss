@@ -9,14 +9,14 @@ Map {
   background-color: #e8f4f8;
 }
 
-#dem_san_carlos {
-  raster-opacity: 0.9;
-  raster-scaling: lanczos;
+#dem_san_carlos_colored {
+  raster-opacity: 0.7;
+  raster-scaling: bilinear;
 }
 
 #hillshade_san_carlos {
-  raster-opacity: 0.35;
-  raster-scaling: lanczos;
+  raster-opacity: 0.45;
+  raster-scaling: bilinear;
 }
 
 /* ═══════════════════════════════════════════════════════════════
