@@ -336,6 +336,7 @@
             <ShapefileCategoriesClass ClassificationField="-1" />
             <LabelsClass Generated="0" Positioning="1" TextRenderingHint="3" />
             <ChartsClass />
+            <Selection TotalCount="13" SelectedCount="1">0000000000001</Selection>
             <TableClass>
               <Fields />
             </TableClass>
@@ -512,10 +513,10 @@
   <Locator i:nil="true" />
   <Map>
     <Envelope>
-      <MaxX>-83.962682427709225</MaxX>
-      <MaxY>11.112053938987936</MaxY>
-      <MinX>-85.2173395993505</MinX>
-      <MinY>10.191297466251195</MinY>
+      <MaxX>-82.753557169554938</MaxX>
+      <MaxY>11.029421947844897</MaxY>
+      <MinX>-85.262871512837478</MinX>
+      <MinY>9.1879090023714145</MinY>
     </Envelope>
     <Projection>GEOGCS["WGS 84",DATUM["WGS_1984",SPHEROID["WGS 84",6378137,298.257223563,AUTHORITY["EPSG","7030"]],AUTHORITY["EPSG","6326"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.01745329251994328,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4326"]]</Projection>
     <TileProviderId>0</TileProviderId>
