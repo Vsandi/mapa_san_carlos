@@ -1,23 +1,33 @@
+/* ═══════════════════════════════════════════════════════════════
+   MAPA DE SAN CARLOS
+   Dylan Cachón & Victoria Sandí
+   TEC Costa Rica - 2025
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ===== FONDO Y CAPAS BASE ===== */
 Map {
-  background-color: #b8dee6;
+  background-color: #e8f4f8;
 }
 
 #dem_san_carlos {
-  raster-opacity: 1;
+  raster-opacity: 0.9;
   raster-scaling: lanczos;
 }
 
 #hillshade_san_carlos {
-  raster-opacity: 0.3;
+  raster-opacity: 0.35;
   raster-scaling: lanczos;
 }
 
-/* ===== CANTÓN Y DISTRITOS ===== */
+/* ═══════════════════════════════════════════════════════════════
+   DIVISIÓN ADMINISTRATIVA
+   ═══════════════════════════════════════════════════════════════ */
+
 #canton_san_carlos {
   [zoom <= 9] {
     line-color: #000;
-    line-width: 3;
-    line-opacity: 0.8;
+    line-width: 2.5;
+    line-opacity: 0.9;
     polygon-opacity: 0;
     
     ::label {
@@ -25,37 +35,35 @@ Map {
       text-face-name: "DejaVu Sans Bold";
       text-size: 16;
       text-fill: #000;
-      text-halo-fill: rgba(255, 255, 255, 0.9);
-      text-halo-radius: 5;
+      text-halo-fill: rgba(255, 255, 255, 0.95);
+      text-halo-radius: 4;
       text-placement: interior;
-      text-opacity: 1;
       text-allow-overlap: true;
-      text-avoid-edges: false;
     }
   }
   
   [zoom > 9] {
     line-color: #000;
     line-width: 2;
-    line-opacity: 0.6;
+    line-opacity: 0.7;
     polygon-opacity: 0;
   }
 }
 
-/* ===== DISTRITOS (VERSIÓN ANTERIOR) ===== */
 #distritos_san_carlos {
   [zoom <= 9] {
     line-color: #666;
-    line-width: 2;
-    line-opacity: 0.3;
+    line-width: 1;
+    line-opacity: 0.4;
+    line-dasharray: 3, 3;
     polygon-opacity: 0;
   }
   
   [zoom = 10] {
-    line-color: #000;
-    line-width: 1.5;
-    line-dasharray: 4, 2;
+    line-color: #333;
+    line-width: 1.2;
     line-opacity: 0.6;
+    line-dasharray: 4, 2;
     polygon-opacity: 0;
     
     ::label {
@@ -76,77 +84,26 @@ Map {
   }
   
   [zoom > 10] {
-    line-color: #000;
-    line-width: 1.5;
+    line-color: #333;
+    line-width: 1.2;
     line-dasharray: 4, 2;
     line-opacity: 0.6;
     polygon-opacity: 0;
   }
 }
 
-/* ===== ÁREAS VERDES ===== */
-#zonas_verdes_san_carlos {
-  [zoom >= 10] {
-    marker-file: url("iconos\zona_verde.svg");
-    marker-fill: #2ecc71;
-    
-    ::label[zoom >= 12] {
-      text-name: "[name]";
-      [name = ""] { text-name: "'Zona verde'"; }
-      text-face-name: "DejaVu Sans Book";
-      text-size: 10;
-      text-fill: #145a32;
-      text-halo-fill: rgba(255, 255, 255, 0.8);
-      text-halo-radius: 1;
-      text-placement: interior;
-    }
-  }
-}
+/* ═══════════════════════════════════════════════════════════════
+   HIDROGRAFÍA - RÍOS (líneas delgadas)
+   ═══════════════════════════════════════════════════════════════ */
 
-/* ===== PLAZAS ===== */
-#plazas_san_carlos {
-  [zoom >= 11] {
-    marker-file: url("iconos\plaza.svg");
-    marker-fill: #f9e79f;
-    
-    ::label[zoom >= 13] {
-      text-name: "'Plaza'";
-      text-face-name: "DejaVu Sans Book";
-      text-size: 10;
-      text-fill: #b7950b;
-      text-halo-fill: rgba(255, 255, 255, 0.8);
-      text-halo-radius: 1;
-      text-placement: interior;
-    }
-  }
-}
-
-/* ===== PARQUES ===== */
-#parques_san_carlos {
-  [zoom >= 10] {
-    marker-file: url("iconos\parque.svg");
-    marker-fill: #58d68d;
-    
-    ::label[zoom >= 12] {
-      text-name: "[name]";
-      [name = ""] { text-name: "'Parque'"; }
-      text-face-name: "DejaVu Sans Bold";
-      text-size: 10;
-      text-fill: #1e8449;
-      text-halo-fill: rgba(255, 255, 255, 0.8);
-      text-halo-radius: 1;
-      text-placement: interior;
-      [zoom >= 14] { text-size: 11; }
-    }
-  }
-}
-
-/* ===== RÍOS ===== */
 #rios_san_carlos {
   [zoom >= 10] {
     line-color: #2980b9;
-    line-width: 1;
+    line-width: 0.8;
     line-opacity: 0.7;
+    
+    [zoom >= 12] { line-width: 1; }
+    [zoom >= 14] { line-width: 1.2; }
     
     ::label[zoom >= 11] {
       text-name: "[NOMBRE]";
@@ -162,47 +119,140 @@ Map {
   }
 }
 
-/* ===== CARRETERAS ===== */
+/* ═══════════════════════════════════════════════════════════════
+   INFRAESTRUCTURA VIAL 
+   ═══════════════════════════════════════════════════════════════ */
+
 #carreteras_san_carlos {
   [zoom >= 10] {
+    /* Base para caminos menores */
     line-color: #7f8c8d;
-    line-width: 1.5;
-    line-opacity: 0.8;
+    line-width: 0.8;
+    line-opacity: 0.7;
     
+    /* CARRETERAS NACIONALES - Naranja, pero más delgadas */
     [TIPO = "CARRETERA NACIONAL"] {
       line-color: #e67e22;
-      line-width: 2;
-      [zoom >= 12] { line-width: 3; }
-      [zoom >= 14] { line-width: 4; }
-    }
-    [TIPO = "CARRETERA CANTONAL"] {
-      line-color: #f39c12;
       line-width: 1.5;
-      line-dasharray: 6, 3;
-      [zoom >= 13] { line-width: 2; }
+      line-opacity: 0.9;
+      [zoom >= 12] { line-width: 2; }
+      [zoom >= 14] { line-width: 2.5; }
     }
     
+    /* CARRETERAS CANTONALES - Naranja claro punteado */
+    [TIPO = "CARRETERA CANTONAL"] {
+      line-color: #f39c12;
+      line-width: 1;
+      line-opacity: 0.8;
+      line-dasharray: 6, 3;
+      [zoom >= 13] { line-width: 1.2; }
+    }
+    
+    /* Etiquetas para carreteras principales */
     ::label[zoom >= 12] {
-      text-name: "[CODIGO]";
-      text-face-name: "DejaVu Sans Bold";
-      text-size: 9;
-      text-fill: #e67e22;
-      text-halo-fill: #fff;
-      text-halo-radius: 2;
-      text-placement: line;
-      text-spacing: 500;
-      [zoom >= 14] { text-size: 10; }
+      [TIPO = "CARRETERA NACIONAL"],
+      [TIPO = "CARRETERA CANTONAL"] {
+        text-name: "[CODIGO]";
+        text-face-name: "DejaVu Sans Bold";
+        text-size: 9;
+        text-fill: #e67e22;
+        text-halo-fill: #fff;
+        text-halo-radius: 2;
+        text-placement: line;
+        text-spacing: 500;
+        [zoom >= 14] { text-size: 10; }
+      }
     }
   }
 }
 
-/* ===== POBLADOS ===== */
+/* ═══════════════════════════════════════════════════════════════
+   ÁREAS VERDES - POLÍGONOS
+   ═══════════════════════════════════════════════════════════════ */
+
+#parques_san_carlos {
+  [zoom >= 11] {
+    polygon-fill: #52C165;
+    polygon-opacity: 0.4;
+    line-color: #2D8A3E;
+    line-width: 1;
+    
+    [zoom >= 13] {
+      polygon-opacity: 0.5;
+      line-width: 1.2;
+    }
+    
+    ::label[zoom >= 12] {
+      text-name: "[name]";
+      [name = ""] { text-name: "'Parque'"; }
+      text-face-name: "DejaVu Sans Bold";
+      text-size: 10;
+      text-fill: #1E5F2D;
+      text-halo-fill: rgba(255, 255, 255, 0.9);
+      text-halo-radius: 2;
+      text-placement: interior;
+      [zoom >= 14] { text-size: 11; }
+    }
+  }
+}
+
+#zonas_verdes_san_carlos {
+  [zoom >= 12] {
+    polygon-fill: #A8E6A3;
+    polygon-opacity: 0.3;
+    line-color: #7BC977;
+    line-width: 0.8;
+    
+    [zoom >= 14] {
+      polygon-opacity: 0.4;
+      
+      ::label {
+        text-name: "[name]";
+        [name = ""] { text-name: "'Zona Verde'"; }
+        text-face-name: "DejaVu Sans Book";
+        text-size: 9;
+        text-fill: #3D8F37;
+        text-halo-fill: rgba(255, 255, 255, 0.8);
+        text-halo-radius: 1.5;
+        text-placement: interior;
+      }
+    }
+  }
+}
+
+#plazas_san_carlos {
+  [zoom >= 12] {
+    polygon-fill: #FFD93D;
+    polygon-opacity: 0.4;
+    line-color: #E6B800;
+    line-width: 1;
+    
+    [zoom >= 14] {
+      polygon-opacity: 0.5;
+      
+      ::label {
+        text-name: "'Plaza'";
+        text-face-name: "DejaVu Sans Bold";
+        text-size: 10;
+        text-fill: #B38600;
+        text-halo-fill: rgba(255, 255, 255, 0.9);
+        text-halo-radius: 2;
+        text-placement: interior;
+      }
+    }
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   POBLADOS - CON SVG
+   ═══════════════════════════════════════════════════════════════ */
+
 #poblprinc_san_carlos {
   [zoom >= 9] {
     marker-file: url("iconos\poblados_principales.svg");
     marker-fill: #8e44ad;
     marker-line-color: #fff;
-    marker-line-width: 1.5;
+    marker-line-width: 1.2;
     marker-opacity: 0.9;
     marker-width: 8;
     marker-allow-overlap: false;
@@ -230,21 +280,21 @@ Map {
     marker-file: url("iconos\poblados.svg");
     marker-fill: #27ae60;
     marker-line-color: #fff;
-    marker-line-width: 0.8;
+    marker-line-width: 0.6;
     marker-opacity: 0.8;
-    marker-width: 6;
+    marker-width: 5;
     marker-allow-overlap: false;
     
     [CATEGORIA = "Urbano"] {
       marker-fill: #16a085;
-      marker-width: 7;
+      marker-width: 6;
     }
     [CATEGORIA = "Rural"] {
       marker-fill: #27ae60;
       marker-width: 5;
     }
     
-    [zoom >= 14] { marker-width: 8; }
+    [zoom >= 14] { marker-width: 6; }
     
     ::label[zoom >= 13] {
       text-name: "[NOMBRE]";
@@ -253,42 +303,96 @@ Map {
       text-fill: #2c3e50;
       text-halo-fill: rgba(255, 255, 255, 0.7);
       text-halo-radius: 1;
-      text-dy: -10;
+      text-dy: -8;
       [zoom >= 15] { text-size: 10; }
     }
   }
 }
 
-/* ===== HOSPITALES ===== */
+/* ═══════════════════════════════════════════════════════════════
+   SERVICIOS DE SALUD
+   ═══════════════════════════════════════════════════════════════ */
+
 #hospitales_san_carlos {
-  [zoom >= 12] {
+  [zoom >= 11] { /* APARECEN ANTES - ZOOM 11 (antes 12) */
     marker-file: url("iconos\hospitales.svg");
-    marker-width: 18;
+    marker-width: 22; 
     marker-opacity: 1;
-    marker-fill: #e74c3c;
-    marker-line-color: #c0392b;
+    marker-fill: #D10000; /* ROJO INTENSO */
+    marker-line-color: #FFFFFF;
+    marker-line-width: 2.5; /* Borde más grueso */
     
-    [zoom >= 13] { marker-width: 20; }
-    [zoom >= 14] { marker-width: 22; }
+    /* FORZAR VISIBILIDAD - desactivar restricciones de overlap */
+    marker-allow-overlap: true;
+    marker-ignore-placement: true;
+    marker-clip: false;
     
-    ::label[zoom >= 13] {
+    [zoom >= 13] { marker-width: 26; }
+    [zoom >= 14] { marker-width: 30; }
+    [zoom >= 15] { marker-width: 32; }
+    
+    ::label[zoom >= 12] {
       text-name: "[NOMBRE]";
       text-face-name: "DejaVu Sans Bold";
-      text-size: 10;
-      text-fill: #e74c3c;
-      text-halo-fill: rgba(255, 255, 255, 0.9);
-      text-halo-radius: 2;
-      text-dy: 18;
+      text-size: 11;
+      text-fill: #D10000; /* Rojo */
+      text-halo-fill: rgba(255, 255, 255, 1); /* Halo blanco sólido */
+      text-halo-radius: 3;
       
+      /* Forzar visibilidad de etiqueta */
+      text-allow-overlap: true;
+      text-avoid-edges: false;
+      text-min-distance: 0;
+      
+      [zoom >= 14] { 
+        text-size: 12;
+        text-dy: 28;
+      }
       [zoom >= 15] { 
-        text-size: 11;
-        text-dy: 20;
+        text-size: 13;
+        text-dy: 30;
       }
     }
   }
 }
 
-/* ===== ESCUELAS ===== */
+#clinicas_san_carlos {
+  [zoom >= 13] {
+    marker-file: url("iconos\clinicas.svg");
+    marker-width: 16;
+    marker-opacity: 0.95;
+    marker-fill: #FF6B6B; /* ROJO CLARO - distinto de hospitales */
+    marker-line-color: #FFFFFF;
+    marker-line-width: 1.5;
+    
+    [TIPO = "E.B.A.I.S"] {
+      marker-fill: #FF8C8C; /* Rojo aún más claro para EBAIS */
+    }
+    [TIPO = "C.C.S.S"] {
+      marker-fill: #FF6B6B; /* Rojo claro para CCSS */
+    }
+    
+    [zoom >= 14] { marker-width: 18; }
+    [zoom >= 15] { marker-width: 20; }
+    
+    ::label[zoom >= 14] {
+      text-name: "[NOMBRE]";
+      text-face-name: "DejaVu Sans Book";
+      text-size: 9;
+      text-fill: #C10000; /* Rojo oscuro para texto */
+      text-halo-fill: rgba(255, 255, 255, 0.95);
+      text-halo-radius: 2;
+      text-dy: 18;
+      
+      [zoom >= 15] { text-size: 10; }
+    }
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   EDUCACIÓN 
+   ═══════════════════════════════════════════════════════════════ */
+
 #escuela_san_carlos {
   [zoom >= 13] {
     marker-file: url("iconos\escuelas.svg");
@@ -296,16 +400,17 @@ Map {
     marker-opacity: 0.9;
     marker-allow-overlap: false;
     
+    /* AZULES para educación */
     [DEPENDENCI = "PUB"] {
-      marker-fill: #2980b9;
+      marker-fill: #2980b9; /* Azul */
       marker-line-color: #1a5276;
     }
     [DEPENDENCI = "PRI"] {
-      marker-fill: #8e44ad;
+      marker-fill: #8e44ad; /* Morado */
       marker-line-color: #6c3483;
     }
     [DEPENDENCI = "SUB"] {
-      marker-fill: #27ae60;
+      marker-fill: #27ae60; /* Verde */
       marker-line-color: #1e8449;
     }
     
@@ -327,111 +432,10 @@ Map {
   }
 }
 
-/* ===== CLÍNICAS ===== */
-#clinicas_san_carlos {
-  [zoom >= 13] {
-    marker-file: url("iconos\clinicas.svg");
-    marker-width: 12;
-    marker-opacity: 0.9;
-    
-    [TIPO = "E.B.A.I.S"] {
-      marker-fill: #3498db;
-      marker-line-color: #2980b9;
-    }
-    [TIPO = "C.C.S.S"] {
-      marker-fill: #2ecc71;
-      marker-line-color: #27ae60;
-    }
-    
-    [zoom >= 14] { marker-width: 14; }
-    
-    ::label[zoom >= 14] {
-      text-name: "[NOMBRE]";
-      text-face-name: "DejaVu Sans Book";
-      text-size: 9;
-      text-fill: #2c3e50;
-      text-halo-fill: rgba(255, 255, 255, 0.8);
-      text-halo-radius: 1;
-      text-dy: 14;
-      
-      [TIPO = "E.B.A.I.S"] { text-fill: #2980b9; }
-      [TIPO = "C.C.S.S"] { text-fill: #27ae60; }
-    }
-  }
-}
+/* ═══════════════════════════════════════════════════════════════
+   SERVICIOS FINANCIEROS
+   ═══════════════════════════════════════════════════════════════ */
 
-/* ===== HOTELES ===== */
-#hoteles_san_carlos {
-  [zoom >= 13] {
-    marker-file: url("iconos\hoteles.svg");
-    marker-width: 12;
-    marker-opacity: 0.9;
-    
-    [CATEGORIA_ = "1"] {
-      marker-fill: #f1c40f;
-      marker-width: 10;
-    }
-    [CATEGORIA_ = "2"] {
-      marker-fill: #f39c12;
-      marker-width: 11;
-    }
-    [CATEGORIA_ = "3"] {
-      marker-fill: #e67e22;
-      marker-width: 12;
-    }
-    [CATEGORIA_ = "4"] {
-      marker-fill: #d35400;
-      marker-width: 13;
-    }
-    [CATEGORIA_ = "5"] {
-      marker-fill: #c0392b;
-      marker-width: 14;
-      marker-line-width: 2;
-    }
-    
-    [zoom >= 14] { 
-      [CATEGORIA_ = "5"] { marker-width: 16; }
-    }
-    
-    ::label[zoom >= 14] {
-      text-name: "[NOMBRE]";
-      text-face-name: "DejaVu Sans Book";
-      text-size: 9;
-      text-fill: #7d3c98;
-      text-halo-fill: rgba(255, 255, 255, 0.8);
-      text-halo-radius: 1;
-      text-dy: 16;
-    }
-  }
-}
-
-/* ===== GASOLINERAS ===== */
-#gasolineras_san_carlos {
-  [zoom >= 13] {
-    marker-file: url("iconos\gasolineras.svg");
-    marker-width: 12;
-    marker-opacity: 0.9;
-    marker-fill: #2c3e50;
-    marker-line-color: #1c2833;
-    
-    [zoom >= 14] { marker-width: 14; }
-    
-    ::label[zoom >= 14] {
-      text-name: "[OTRO_NOMBR]";
-      [OTRO_NOMBR = "NA"] {
-        text-name: "[NOMBRE_REC]";
-      }
-      text-face-name: "DejaVu Sans Book";
-      text-size: 9;
-      text-fill: #2c3e50;
-      text-halo-fill: rgba(255, 255, 255, 0.8);
-      text-halo-radius: 1;
-      text-dy: 15;
-    }
-  }
-}
-
-/* ===== AGENTES BANCARIOS ===== */
 #agentes_bancarios_san_carlos {
   [zoom >= 13] {
     marker-file: url("iconos\bancos.svg");
@@ -439,32 +443,33 @@ Map {
     marker-opacity: 0.9;
     marker-allow-overlap: false;
     
+    /* VERDES para bancos */
     [BANCO = "BANCO CREDITO AGRICOLA DE CARTAGO"] {
       marker-fill: #27ae60;
       marker-line-color: #1e8449;
     }
     [BANCO = "BANCO NACIONAL DE COSTA RICA"] {
-      marker-fill: #e74c3c;
-      marker-line-color: #c0392b;
+      marker-fill: #3498db; /* Azul para BNCR */
+      marker-line-color: #2980b9;
     }
     [BANCO = "BANCO DE COSTA RICA"] {
       marker-fill: #3498db;
       marker-line-color: #2980b9;
     }
     [BANCO = "BANCO POPULAR"] {
-      marker-fill: #f1c40f;
+      marker-fill: #f1c40f; /* Amarillo */
       marker-line-color: #f39c12;
     }
     [BANCO = "MUTUAL ALAJUELA"] {
-      marker-fill: #8e44ad;
+      marker-fill: #8e44ad; /* Morado */
       marker-line-color: #6c3483;
     }
     [BANCO = "BANCO INTERFIN"] {
-      marker-fill: #d35400;
+      marker-fill: #d35400; /* Naranja */
       marker-line-color: #a04000;
     }
     [BANCO = "BANCO BAC-SAN JOSE"] {
-      marker-fill: #1abc9c;
+      marker-fill: #1abc9c; /* Turquesa */
       marker-line-color: #16a085;
     }
     
@@ -487,8 +492,8 @@ Map {
       text-dy: 14;
       
       [BANCO = "BANCO CREDITO AGRICOLA DE CARTAGO"] { text-fill: #27ae60; }
-      [BANCO = "BANCO NACIONAL DE COSTA RICA"] { text-fill: #e74c3c; }
-      [BANCO = "BANCO DE COSTA RICA"] { text-fill: #3498db; }
+      [BANCO = "BANCO NACIONAL DE COSTA RICA"] { text-fill: #3498db; }
+      [BANCO = "BANCO DE COSTA RICA"] { text-name: "'BCR'"; text-fill: #3498db; }
       [BANCO = "BANCO POPULAR"] { text-fill: #f39c12; }
       [BANCO = "MUTUAL ALAJUELA"] { text-fill: #8e44ad; }
       [BANCO = "BANCO INTERFIN"] { text-fill: #d35400; }
@@ -497,15 +502,91 @@ Map {
   }
 }
 
-/* ===== COMERCIOS (Puntos) ===== */
+/* ═══════════════════════════════════════════════════════════════
+   SERVICIOS TURÍSTICOS
+   ═══════════════════════════════════════════════════════════════ */
+
+#hoteles_san_carlos {
+  [zoom >= 13] {
+    marker-file: url("iconos\hoteles.svg");
+    marker-width: 12;
+    marker-opacity: 0.9;
+    
+    [CATEGORIA_ = "1"] {
+      marker-fill: #f1c40f; /* Amarillo */
+      marker-width: 10;
+    }
+    [CATEGORIA_ = "2"] {
+      marker-fill: #f39c12; /* Naranja */
+      marker-width: 11;
+    }
+    [CATEGORIA_ = "3"] {
+      marker-fill: #e67e22; /* Naranja oscuro */
+      marker-width: 12;
+    }
+    [CATEGORIA_ = "4"] {
+      marker-fill: #d35400; /* Naranja-rojizo */
+      marker-width: 13;
+    }
+    [CATEGORIA_ = "5"] {
+      marker-fill: #a04000; /* Marrón-rojizo */
+      marker-width: 14;
+      marker-line-width: 1.5;
+    }
+    
+    [zoom >= 14] { 
+      [CATEGORIA_ = "5"] { marker-width: 16; }
+    }
+    
+    ::label[zoom >= 14] {
+      text-name: "[NOMBRE]";
+      text-face-name: "DejaVu Sans Book";
+      text-size: 9;
+      text-fill: #7d3c98; /* Morado para texto */
+      text-halo-fill: rgba(255, 255, 255, 0.8);
+      text-halo-radius: 1;
+      text-dy: 16;
+    }
+  }
+}
+
+#gasolineras_san_carlos {
+  [zoom >= 13] {
+    marker-file: url("iconos\gasolineras.svg");
+    marker-width: 12;
+    marker-opacity: 0.9;
+    marker-fill: #2c3e50; /* Gris oscuro */
+    marker-line-color: #1c2833;
+    
+    [zoom >= 14] { marker-width: 14; }
+    
+    ::label[zoom >= 14] {
+      text-name: "[OTRO_NOMBR]";
+      [OTRO_NOMBR = "NA"] {
+        text-name: "[NOMBRE_REC]";
+      }
+      text-face-name: "DejaVu Sans Book";
+      text-size: 9;
+      text-fill: #2c3e50; /* Gris oscuro */
+      text-halo-fill: rgba(255, 255, 255, 0.8);
+      text-halo-radius: 1;
+      text-dy: 15;
+    }
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   COMERCIOS
+   ═══════════════════════════════════════════════════════════════ */
+
 #comercios_san_carlos {
   [zoom >= 14] {
     marker-file: url("iconos\tiendas.svg");
     marker-width: 10;
     marker-opacity: 0.7;
-    marker-fill: #e74c3c;
-    marker-line-color: #c0392b;
-    marker-line-width: 1;
+    marker-fill: #8e44ad; /* Morado */
+    marker-line-color: #6c3483; /* Morado oscuro para borde */
+    marker-line-width: 0.8;
     
     [zoom >= 15] { marker-width: 12; }
     
@@ -514,10 +595,10 @@ Map {
       [name = ""] { text-name: "'Comercio'"; }
       text-face-name: "DejaVu Sans Book";
       text-size: 8;
-      text-fill: #7f8c8d;
+      text-fill: #6c3483; /* Morado oscuro para texto */
       text-halo-fill: rgba(255, 255, 255, 0.7);
       text-halo-radius: 1;
-      text-dy: 13;
+      text-dy: 12;
     }
   }
 }
