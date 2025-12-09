@@ -536,6 +536,10 @@ git push -u origin main
 
 Acceder a: [Mapa San Carlos](https://dylin1311.github.io/mapa-san-carlos/)
 
+### Repositorio con todos los archivos que se utilizaron
+
+Acceder a : https://github.com/Vsandi/mapa_san_carlos
+
 ---
 
 ## 📄 Licencia
