@@ -1,494 +1,560 @@
-# Mapa en Mosaico de San Carlos, Alajuela
-
-**Proyecto 3 - Sistemas de Información Geográfica**  
-**Tecnológico de Costa Rica**  
-**II Semestre 2025**
-
----
+# Mapa Interactivo de San Carlos, Alajuela
 
 ## 👥 Integrantes del Grupo
 
-- **Dylan Cachón**
-- **Victoria Sandí**
+- **Dylan Chacón Berrocal - 2023171126**
+- **Victoria Sandí Barrantes - 2022146536**
 
 ---
 
-## 📍 Cantón Asignado
+## 📍 Área de Estudio
 
-**San Carlos**, Alajuela, Costa Rica
-
-**Coordenadas del área de estudio:**
-- Norte: 10.78°
-- Sur: 10.24°
-- Este: -84.00°
-- Oeste: -84.96°
-
-**Bounding Box:** `[10.24, -84.96, 10.78, -84.00]`
-
----
-
-## 🎯 Objetivo del Proyecto
-
-Crear un mapa interactivo en mosaico (tile map) del cantón de San Carlos utilizando TileMill y publicarlo en la web mediante GitHub Pages. El mapa incluye capas base de información geográfica de Costa Rica, datos de elevación procesados, y datos de servicios y comercios obtenidos de OpenStreetMap.
+**Cantón:** San Carlos  
+**Provincia:** Alajuela, Costa Rica  
+**Área:** ~3,348 km²  
+**Coordenadas del bounding box:**
+- Norte: 10.996163
+- Sur: 10.246342
+- Este: -84.161061
+- Oeste: -84.862638
 
 ---
 
 ## 🌐 Mapa Publicado
 
-**URL del mapa:** [PENDIENTE - Se actualizará después de la publicación]
+**URL del mapa:** [Mapa San Carlos](https://dylin1311.github.io/mapa-san-carlos/)
 
 ---
 
-## 📊 Datos Utilizados
+## 🎯 Objetivo del Proyecto
 
-### Capas Base (Instituto Geográfico Nacional)
+Crear un mapa interactivo en mosaico (tile map) del cantón de San Carlos utilizando datos geográficos de diversas fuentes, procesados mediante herramientas GIS profesionales y publicado en la web mediante GitHub Pages.
 
-| Capa | Archivo | Elementos | Descripción |
+El mapa incluye:
+- Modelo de elevación digital (DEM) con colores hipsométricos
+- Relieve sombreado (hillshade)
+- División administrativa (cantón y distritos)
+- Infraestructura vial e hidrográfica
+- Servicios públicos y comerciales
+- Áreas verdes y puntos de interés
+
+---
+
+## 📊 Fuentes de Datos
+
+### 1. Capas Base del IGN (Instituto Geográfico Nacional)
+
+Archivos shapefile de cobertura nacional de Costa Rica proporcionados en el repositorio del curso:
+
+| Capa | Archivo | Geometría | Descripción |
 |------|---------|-----------|-------------|
-| Cantones | `geo_cantones.shp` | 81 cantones | Límites cantonales de Costa Rica |
-| Distritos | `geo_distritos.shp` | - | Límites distritales |
-| Carreteras | `geo_carreter.shp` | 5,040 segmentos | Red vial nacional |
-| Ríos | `geo_rios.shp` | 857 ríos | Red hidrográfica |
-| Poblados | `geo_poblados.shp` | 4,884 poblados | Centros poblados |
-| Poblados principales | `geo_poblprinc.shp` | 378 poblados | Cabeceras distritales |
-| Hitos de elevación | `geo_hitos.shp` | 7,504 puntos | Puntos con elevación para interpolación |
+| Cantones | `geo_cantones.shp` | Polígono | División cantonal de Costa Rica |
+| Distritos | `geo_distritos.shp` | Polígono | División distrital de Costa Rica |
+| Carreteras | `geo_carreter.shp` | Línea | Red vial nacional |
+| Ríos | `geo_rios.shp` | Línea | Red hidrográfica |
+| Poblados | `geo_poblados.shp` | Punto | Centros poblados |
+| Poblados principales | `geo_poblprinc.shp` | Punto | Cabeceras distritales |
+| Hitos de elevación | `geo_hitos.shp` | Punto | 7,504 puntos con elevación (campo ELEVACION) |
 
-**Fuente:** Instituto Geográfico Nacional de Costa Rica (IGN)  
-**Proyección:** WGS 84 (EPSG:4326)
+### 2. Datos de OpenStreetMap
 
----
-
-### Capas Recortadas para San Carlos
-
-Todas las capas nacionales fueron recortadas al área del cantón de San Carlos:
-
-- `canton_san_carlos.shp` - Límite del cantón
-- `distritos_san_carlos.shp` - 13 distritos
-- `carreteras_san_carlos.shp` - 251 segmentos de carreteras
-- `rios_san_carlos.shp` - 68 ríos principales
-- `poblados_san_carlos.shp` - 271 poblados
-- `poblprinc_san_carlos.shp` - 10 cabeceras distritales
-
-**Herramienta utilizada:** QGIS 3.44 - Geoprocesamiento → Recortar (Clip)
-
----
-
-### Capas de Elevación (Generadas)
-
-#### DEM (Modelo Digital de Elevación)
-
-**Archivo:** `dem_san_carlos.tif`
-
-**Metodología:**
-1. Capa de entrada: `geo_hitos.shp` (7,504 puntos con campo ELEVACION)
-2. Herramienta: QGIS → Processing Toolbox → TIN Interpolation
-3. Formato de salida: GeoTIFF
-
-**Resultado:** Superficie continua de elevación del terreno
-
----
-
-#### Hillshade (Relieve Sombreado)
-
-**Archivo:** `hillshade_san_carlos.tif`
-
-**Metodología:**
-1. Capa de entrada: `dem_san_carlos.tif`
-2. Herramienta: QGIS → Processing Toolbox → Hillshade
-3. Formato de salida: GeoTIFF
-
-**Resultado:** Representación visual del relieve con sombras
-
----
-
-### Capas de OpenStreetMap
-
-**Método de descarga:** Overpass Turbo API (https://overpass-turbo.eu/)
-
-#### Polígonos
-
-| Capa | Archivo | Query OSM | Descripción |
-|------|---------|-----------|-------------|
-| Parques | `parques_san_carlos.shp` | `leisure=park` | Parques públicos |
-| Plazas | `plazas_san_carlos.shp` | `place=square` | Plazas y espacios públicos |
-| Zonas verdes | `zonas_verdes_san_carlos.shp` | `landuse=grass/forest` | Áreas verdes y bosques |
-
-#### Puntos de Servicios
-
-| Capa | Archivo | Query OSM | Descripción |
-|------|---------|-----------|-------------|
-| Escuelas | `escuelas_san_carlos.shp` | `amenity=school` | Centros educativos |
-| Hospitales | `hospitales_san_carlos.shp` | `amenity=hospital` | Hospitales |
-| Clínicas | `clinicas_san_carlos.shp` | `amenity=clinic` | Clínicas y EBAIS |
-| Gasolineras | `gasolineras_san_carlos.shp` | `amenity=fuel` | Estaciones de servicio |
-| Hoteles | `hoteles_san_carlos.shp` | `tourism=hotel` | Hoteles y hospedajes |
-| Bancos | `bancos_san_carlos.shp` | `amenity=bank` | Agencias bancarias |
-| Comercios | `comercios_san_carlos.shp` | `shop=*` | Establecimientos comerciales |
+Datos descargados mediante [Overpass Turbo](https://overpass-turbo.eu/) usando el bounding box de San Carlos.
 
 **Proceso de descarga:**
-1. Acceso a Overpass Turbo: https://overpass-turbo.eu/
-2. Configuración del bounding box de San Carlos
-3. Ejecución de consultas específicas por tipo de elemento
-4. Exportación en formato GeoJSON
-5. Conversión a Shapefile en QGIS
+1. Uso de consultas Overpass QL para filtrar elementos específicos
+2. Exportación en formato GeoJSON
+3. Conversión a shapefile mediante QGIS cuando fue necesario
+4. Recorte espacial usando MapWindow
 
-**Ejemplo de consulta utilizada (Parques):**
-```overpass
-[bbox:10.24,-84.96,10.78,-84.00][timeout:90];
-(
-  way["leisure"="park"];
-  relation["leisure"="park"];
-);
-out geom;
-```
+**Capas descargadas:**
+
+| Capa | Origen | Formato Original | Procesamiento |
+|------|--------|------------------|---------------|
+| Parques | OSM - Overpass Turbo | GeoJSON | Convertido a SHP en QGIS |
+| Plazas | OSM - Overpass Turbo | GeoJSON | Convertido a SHP en QGIS |
+| Zonas verdes | OSM - Overpass Turbo | GeoJSON | Convertido a SHP en QGIS |
+| Comercios | OSM - Overpass Turbo | GeoJSON | Convertido a SHP en QGIS |
+| Hospitales | TecDigital / OSM | Shapefile | Recorte espacial |
+| Clínicas | TecDigital / OSM | Shapefile | Recorte espacial |
+| Escuelas | TecDigital / OSM | Shapefile | Recorte espacial |
+| Bancos | TecDigital / OSM | Shapefile | Recorte espacial |
+| Gasolineras | TecDigital / OSM | Shapefile | Recorte espacial |
+| Hoteles | TecDigital / OSM | Shapefile | Recorte espacial |
 
 ---
 
 ## 🛠️ Metodología
 
-### Fase 1: Preparación de Datos en QGIS
+### Fase 1: Preparación de Datos
 
-#### 1.1 Generación del DEM
-- Interpolación TIN desde puntos de elevación
-- Resolución: 30 metros
-- Tiempo de procesamiento: ~15 minutos
+#### 1.1 Recorte Espacial con MapWindow
 
-#### 1.2 Generación del Hillshade
-- Cálculo de sombras desde el DEM
-- Parámetros estándar de cartografía
-- Tiempo de procesamiento: ~2 minutos
+**Software:** MapWindow 5
 
-#### 1.3 Recorte de Capas Nacionales
-- Uso de `canton_san_carlos.shp` como máscara
-- Herramienta: Clip (Recortar)
-- Todas las capas procesadas a WGS84
+**Proceso:**
+1. **Carga de capas base:** Se cargaron los shapefiles del IGN (ríos, carreteras, poblados, hitos, etc.) junto con el shapefile del cantón de San Carlos.
 
-#### 1.4 Descarga de Datos OSM
-- Método: Overpass Turbo API
-- Formato inicial: GeoJSON
-- Conversión: GeoJSON → Shapefile (QGIS)
-- Total de capas descargadas: 10
+2. **Selección espacial (Spatial Query):**
+   - Herramienta: `Spatial Query` en MapWindow
+   - Criterio: Seleccionar elementos que intersectan con el polígono de San Carlos
+   - Capas procesadas:
+     - Ríos → `rios_san_carlos.shp`
+     - Carreteras → `carreteras_san_carlos.shp`
+     - Poblados → `poblados_san_carlos.shp`
+     - Poblados principales → `poblprinc_san_carlos.shp`
+     - Hitos de elevación → `hitos_san_carlos.shp`
+     - Distritos → `distritos_san_carlos.shp`
+     - Servicios (hospitales, escuelas, clínicas, bancos, gasolineras, hoteles)
+     - Áreas verdes (parques, plazas, zonas verdes)
+
+3. **Exportación de selecciones:**
+   - Herramienta: `Export Selection` en MapWindow
+   - Formato: ESRI Shapefile
+   - CRS: EPSG:4326 (WGS84)
+   - Resultado: Shapefiles recortados exclusivamente al área de San Carlos
+
+#### 1.2 Conversión de GeoJSON a Shapefile (QGIS)
+
+**Software:** QGIS
+
+Para las capas descargadas de OpenStreetMap en formato GeoJSON:
+
+1. Abrir QGIS
+2. Cargar archivo GeoJSON (arrastrar y soltar)
+3. Clic derecho → `Export` → `Save Features As...`
+4. Formato: `ESRI Shapefile`
+5. CRS: `EPSG:4326 - WGS 84`
+6. Guardar con nombre descriptivo (ej: `parques_san_carlos.shp`)
+
+**Capas convertidas:**
+- `parques_san_carlos.shp`
+- `plazas_san_carlos.shp`
+- `zonas_verdes_san_carlos.shp`
+- `comercios_san_carlos.shp`
 
 ---
 
-### Fase 2: Configuración en TileMill
+### Fase 2: Generación del Modelo de Elevación Digital (DEM)
+ 
+**Software:** GDAL (Geospatial Data Abstraction Library)
 
-#### 2.1 Creación del Proyecto
+#### 2.1 Interpolación TIN (Triangulated Irregular Network)
+
+**Archivo de entrada:** `hitos_san_carlos.shp` (7,504 puntos de elevación)
+
+**Comando GDAL:**
 ```bash
-Proyecto: mapa_san_carlos
-Descripción: Mapa en mosaico del cantón de San Carlos
+gdal_grid -zfield ELEVACION \
+  -a linear:radius=-1.0 \
+  -txe -84.862638 -84.161061 \
+  -tye 10.246342 10.996163 \
+  -outsize 2500 2500 \
+  -of GTiff -ot Float32 \
+  -co "COMPRESS=LZW" \
+  -co "TILED=YES" \
+  -co "BIGTIFF=IF_SAFER" \
+  hitos_san_carlos.shp \
+  dem_san_carlos.tif
 ```
 
-#### 2.2 Orden de Capas (de abajo hacia arriba)
-1. **hillshade_san_carlos** (raster) - Relieve sombreado
-2. **dem_san_carlos** (raster) - Elevación con colores
-3. **canton_san_carlos** (polígono) - Límite cantonal
-4. **distritos_san_carlos** (polígono) - Divisiones administrativas
-5. **zonas_verdes_san_carlos** (polígono) - Áreas verdes
-6. **parques_san_carlos** (polígono) - Parques
-7. **plazas_san_carlos** (polígono) - Plazas
-8. **rios_san_carlos** (línea) - Red hidrográfica
-9. **carreteras_san_carlos** (línea) - Red vial
-10. **poblados_san_carlos** (punto) - Poblados menores
-11. **poblprinc_san_carlos** (punto) - Cabeceras
-12. **escuelas_san_carlos** (punto) - Educación
-13. **hospitales_san_carlos** (punto) - Salud (hospitales)
-14. **clinicas_san_carlos** (punto) - Salud (clínicas)
-15. **gasolineras_san_carlos** (punto) - Combustible
-16. **hoteles_san_carlos** (punto) - Hospedaje
-17. **bancos_san_carlos** (punto) - Servicios financieros
-18. **comercios_san_carlos** (punto) - Comercio
+**Parámetros:**
+- `-zfield ELEVACION`: Campo con valores de elevación
+- `-a linear:radius=-1.0`: Interpolación lineal (TIN) sin límite de radio
+- `-txe` / `-tye`: Extensión geográfica del área (bounding box)
+- `-outsize 2500 2500`: Resolución de ~30m por píxel
+- `-of GTiff`: Formato GeoTIFF
+- `-ot Float32`: Valores en punto flotante
+- Compresión LZW para reducir tamaño de archivo
 
----
+**Resultado:** `dem_san_carlos.tif` (modelo en escala de grises)
 
-#### 2.3 Simbología
+#### 2.2 Aplicación de Rampa de Color
 
-##### Capas Raster
-- **Hillshade:** Opacidad 30-40%, escalado lanczos
-- **DEM:** Rampa de color (verde→amarillo→marrón→blanco), opacidad 70%
+**Paleta de colores hipsométrica personalizada:**
 
-##### Polígonos
-- **Cantón:** Borde negro 3px, sin relleno
-- **Distritos:** Borde gris 2px, sin relleno (visible zoom ≥10)
-- **Parques:** Relleno verde claro (#8fbf8f), borde verde oscuro
-- **Zonas verdes:** Relleno verde (#b8f5b8), sin borde
+Archivo `color_ramp.txt` con 13 rangos de elevación:
 
-##### Líneas
-- **Ríos:** Azul (#4a9fd6), grosor 1.5-2.5px según zoom
-- **Carreteras Nacionales:** Amarillo/naranja (#fdb863), grosor 3-5px
-- **Carreteras Cantonales:** Naranja (#fd8d3c), grosor 2-3px, línea punteada
-- **Caminos Vecinales:** Gris (#999), grosor 1-2px
+```
+# Elevación   R   G   B     Color HEX    Descripción
+8.484         8   81  156   #08519c      Azul marino (mínimo - valles)
+200           64  125 186   #407dba      Azul medio
+400           107 174 214   #6baed6      Azul claro
+600           158 202 225   #9ecae1      Azul muy claro
+800           199 233 192   #c7e9c0      Verde-azulado (transición)
+1000          161 217 155   #a1d99b      Verde claro
+1200          116 196 118   #74c476      Verde medio
+1400          65  171 93    #41ab5d      Verde oscuro
+1600          254 217 118   #fed976      Amarillo-naranja (transición)
+1800          253 174 97    #fdae61      Naranja claro
+2000          227 26  28    #e31a1c      Rojo
+2100          215 48  39    #d73027      Rojo oscuro
+2264.139      128 0   38    #800026      Rojo vino (máximo - picos)
+```
 
-##### Puntos
-**Poblados:**
-- Principales: Círculo rojo (#b30000), 12-16px
-- Normales: Círculo rojo claro (#e31a1c), 8-10px
-
-**Servicios (con íconos):**
-- Hospitales: Rojo (#d7191c), 24-28px
-- Escuelas: Azul (#4575b4), 20-24px
-- Clínicas: Azul claro (#91bfdb), 18-20px
-- Bancos: Verde (#238b45), 18-20px
-- Gasolineras: Amarillo (#fee090), 18-20px
-- Hoteles: Azul claro (#91bfdb), 18-20px
-- Comercios: Púrpura (#c994c7), 16-18px
-
-**Íconos:** Formato PNG 32x32px de Maki Icons (Mapbox)
-
----
-
-#### 2.4 Etiquetas
-
-**Configuración general:**
-- Fuente: DejaVu Sans
-- Halo blanco (2px) para contraste
-- Tamaño variable según zoom
-
-**Por tipo:**
-- Cantón: 16pt, negrita (zoom <10)
-- Distritos: 11-14pt, regular (zoom ≥10)
-- Ríos: 9-11pt, itálica, azul oscuro
-- Carreteras: 9-11pt, negrita, código de ruta
-- Poblados principales: 11-13pt, negrita
-- Poblados: 9-10pt, regular (zoom ≥12)
-- Servicios: Nombre del lugar, 8-10pt (zoom ≥14)
-
----
-
-#### 2.5 Niveles de Zoom
-
-| Zoom | Capas Visibles |
-|------|----------------|
-| 0-9 | Hillshade, DEM, cantón (con etiqueta) |
-| 10-11 | + Distritos, ríos, carreteras principales |
-| 12-13 | + Poblados, calles, servicios principales |
-| 14-16 | + Todos los servicios, comercios, detalles completos |
-
----
-
-### Fase 3: Exportación de Tiles
-
-#### Configuración de Exportación
-- **Formato:** MBTiles
-- **Nombre:** `san_carlos.mbtiles`
-- **Zoom levels:** 8 (mínimo) a 16 (máximo)
-- **Centro:** [-84.43, 10.47]
-- **Bounds:** Ajustado a San Carlos
-- **Metatile:** 2
-
-#### Conversión a Estructura Web
+**Comando GDAL:**
 ```bash
-# Usando mbtiles_to_tiles.py
-python mbtiles_to_tiles.py san_carlos.mbtiles tiles/
+gdaldem color-relief \
+  dem_san_carlos.tif \
+  color_ramp.txt \
+  dem_san_carlos_colored.tif
+```
 
-# Estructura resultante:
+**Resultado:** `dem_san_carlos_colored.tif` (DEM coloreado)
+
+#### 2.3 Generación de Hillshade (Relieve Sombreado)
+
+**Comando GDAL:**
+```bash
+gdaldem hillshade \
+  -z 3.5 \
+  -s 111120 \
+  -az 315 \
+  -alt 45 \
+  -combined \
+  -compute_edges \
+  -co "COMPRESS=LZW" \
+  dem_san_carlos.tif \
+  hillshade_san_carlos.tif
+```
+
+**Parámetros:**
+- `-z 3.5`: Factor de exageración vertical (mayor relieve visual)
+- `-s 111120`: Factor de escala (metros por grado, latitud ~10°)
+- `-az 315`: Azimut de iluminación (noroeste, 315°)
+- `-alt 45`: Altitud del sol (45° sobre horizonte)
+- `-combined`: Combina hillshade con pendiente para mejor efecto
+- `-compute_edges`: Calcula bordes correctamente
+
+**Resultado:** `hillshade_san_carlos.tif` (relieve sombreado en escala de grises)
+
+---
+
+### Fase 3: Diseño Cartográfico en TileMill
+
+**Software:** TileMill
+**Lenguaje de estilos:** CartoCSS
+
+#### 3.1 Configuración del Proyecto
+
+1. Crear nuevo proyecto en TileMill: `san_carlos_map`
+2. Configurar sistema de coordenadas: `WGS84` (EPSG:4326)
+3. Establecer centro del mapa: `[10.47, -84.43]`
+4. Establecer zoom inicial: `10`
+5. Establecer rango de zoom: `8-16`
+
+#### 3.2 Carga de Capas
+
+**Orden de capas (de abajo hacia arriba):**
+
+1. **Hillshade** (`hillshade_san_carlos.tif`)
+   - Opacidad: 0.45
+   - Escalado: bilinear
+
+2. **DEM coloreado** (`dem_san_carlos_colored.tif`)
+   - Opacidad: 0.7
+   - Escalado: bilinear
+
+3. **Cantón** (`canton_san_carlos.shp`)
+   - Borde negro (line-width: 2.5 en zoom ≤9, 2.0 en zoom >9)
+   - Etiqueta "San Carlos" en zoom ≤ 9
+
+4. **Distritos** (`distritos_san_carlos.shp`)
+   - Bordes punteados (dasharray: 4, 2)
+   - Etiquetas desde zoom 10
+
+5. **Ríos** (`rios_san_carlos.shp`)
+   - Color: azul
+   - Line-width: 0.8-1.2px
+   - Aparece desde zoom 10
+
+6. **Carreteras** (`carreteras_san_carlos.shp`)
+   - Nacionales: naranja, width 1.5-2.5px
+   - Cantonales: naranja claro, punteado
+   - Caminos: gris, width 0.8px
+   - Aparece desde zoom 10
+
+7. **Áreas verdes:**
+   - Parques (`parques_san_carlos.shp`) - desde zoom 11, verde
+   - Zonas verdes (`zonas_verdes_san_carlos.shp`) - desde zoom 12, verde claro
+   - Plazas (`plazas_san_carlos.shp`) - desde zoom 12, amarillo
+
+8. **Poblados:**
+   - Principales (`poblprinc_san_carlos.shp`) - desde zoom 9, morado
+   - Normales (`poblados_san_carlos.shp`) - desde zoom 12, verde
+
+9. **Servicios de salud:**
+   - Hospitales - desde zoom 11, rojo intenso, width 22-32px
+   - Clínicas - desde zoom 13, rojo claro, width 16-20px
+
+10. **Educación:**
+    - Escuelas - desde zoom 13, width 12-14px
+      - Públicas: azul
+      - Privadas: morado
+      - Subvencionadas: verde
+
+11. **Servicios financieros:**
+    - Bancos - desde zoom 13, width 12-13px
+      - Colores específicos por entidad (BNCR/BCR: azul, BP: amarillo, etc.)
+
+12. **Servicios turísticos:**
+    - Hoteles - desde zoom 13, width 10-16px
+      - Clasificados por categoría (1-5 estrellas) con gradiente amarillo-marrón
+    - Gasolineras - desde zoom 13, gris oscuro, width 12-14px
+
+13. **Comercios:**
+    - Comercios - desde zoom 14, morado, width 10-12px
+
+#### 3.3 Estilos CartoCSS
+
+**Archivo:** `tilemill_style.mss`
+
+**Características principales:**
+- Fondo: azul muy claro
+- Opacidades optimizadas: DEM 0.7, Hillshade 0.45
+- Líneas delgadas para infraestructura (ríos 0.8-1.2px, carreteras 1.5-2.5px)
+- Hospitales con máxima prioridad visual (aparecen en zoom 11, tamaño 22-32px)
+- Jerarquía clara de colores y tamaños
+- Etiquetas con halos blancos para legibilidad
+- SVG icons para todos los servicios
+
+**Paleta de colores principal:**
+
+| Elemento | Color | Hex | Uso |
+|----------|-------|-----|-----|
+| Hospitales | Rojo intenso | #D10000 | Máxima prioridad |
+| Clínicas | Rojo claro | #FF6B6B | Salud secundaria |
+| Escuelas públicas | Azul | #2980b9 | Educación pública |
+| Escuelas privadas | Morado | #8e44ad | Educación privada |
+| Escuelas subv. | Verde | #27ae60 | Educación subvencionada |
+| Gasolineras | Gris oscuro | #2c3e50 | Combustible |
+| Comercios | Morado | #8e44ad | Comercio general |
+| Carreteras nacionales | Naranja | #e67e22 | Vías principales |
+| Carreteras cantonales | Naranja claro | #f39c12 | Vías secundarias |
+| Ríos | Azul | #2980b9 | Hidrografía |
+| Parques | Verde | #52C165 | Áreas verdes |
+| Zonas verdes | Verde claro | #A8E6A3 | Áreas verdes secundarias |
+| Plazas | Amarillo dorado | #FFD93D | Espacios públicos |
+| Poblados principales | Morado | #8e44ad | Cabeceras |
+| Poblados normales | Verde | #27ae60 | Poblados menores |
+
+**Jerarquía de zoom:**
+```
+ZOOM 8-9:   Cantón + DEM + Hillshade + Fondo azul claro
+ZOOM 9:     + Poblados principales (morado)
+ZOOM 10:    + Ríos + Carreteras + Distritos (etiquetas)
+ZOOM 11:    + HOSPITALES (rojo intenso, 22px) + Parques
+ZOOM 12:    + Zonas verdes + Plazas + Poblados normales
+ZOOM 13:    + Clínicas + Escuelas + Bancos + Hoteles + Gasolineras
+ZOOM 14:    + Comercios
+ZOOM 15:    + Mayor detalle en todas las etiquetas
+```
+
+**Características especiales del estilo:**
+- **Hospitales:** `marker-allow-overlap: true`, `marker-ignore-placement: true` para forzar visibilidad
+- **Infraestructura delgada:** Ríos y carreteras con líneas finas para no opacar el DEM
+- **SVG icons:** Todos los servicios usan iconos vectoriales escalables
+- **Etiquetas optimizadas:** Halos blancos, tamaños progresivos según zoom
+
+Ver archivo completo: `tilemill_style.mss`
+
+---
+
+### Fase 4: Exportación de Tiles
+
+#### 4.1 Configuración de Exportación
+
+**En TileMill:**
+1. Clic en `Export` → `MBTiles`
+2. Configurar parámetros:
+   - **Nombre:** `mapa_san_carlos`
+   - **Formato:** MBTiles
+   - **Zoom mínimo:** 8
+   - **Zoom máximo:** 16
+   - **Centro:** `10.47, -84.43`
+   - **Límites:** Bounding box de San Carlos
+
+3. Exportar → `mapa_san_carlos.mbtiles`
+
+#### 4.2 Conversión a Tiles PNG
+
+**Script Python:** `extraer_tiles.py`
+
+```bash
+python3 .\extraer_tiles.py
+```
+
+**Resultado:** Carpeta `tiles/` con estructura:
+```
 tiles/
-  └── {z}/
-      └── {x}/
-          └── {y}.png
+├── 8/
+├── 9/
+├── 10/
+...
+└── 16/
 ```
+
+**Formato de tiles:**
+- Formato: PNG con transparencia
+- Tamaño: 256 × 256 píxeles
+- Nomenclatura: `{z}/{x}/{y}.png`
+- Proyección: Web Mercator (EPSG:3857)
 
 ---
 
-### Fase 4: Desarrollo Web
+### Fase 5: Desarrollo Web
 
-#### Estructura del Sitio
+#### 5.1 Página HTML
+
+**Archivo:** `index.html`
+
+**Tecnología:** Leaflet.js 1.9.4
+
+**Características:**
+- Mapa interactivo centrado en San Carlos [10.47, -84.43]
+- Tiles personalizados desde carpeta `tiles/`
+- Controles de zoom y escala
+- Panel de información lateral con leyenda completa
+- Diseño responsive (adaptable a móvil/tablet/escritorio)
+- Créditos y atribuciones
+
+Ver archivo completo: `index.html`
+
+---
+
+### Fase 6: Publicación en GitHub Pages
+
+#### 6.1 Estructura del Repositorio
+
 ```
-mapa_san_carlos_web/
-├── index.html          # Página principal
-├── tiles/              # Carpeta con tiles generados
+mapa_san_carlos/
+├── index.html
+├── tiles/
 │   ├── 8/
 │   ├── 9/
-│   └── ...
-└── README.md
+│   ├── 10/
+│   └── ... (hasta 16)
+├── README.md
+├── tilemill_style.mss
+└── docs/
+    └── [documentación adicional]
 ```
 
-#### Tecnologías
-- **Leaflet.js 1.9.4** - Librería de mapas interactivos
-- **HTML5 + CSS3** - Estructura y diseño
-- **JavaScript** - Interactividad
+#### 6.2 Comandos Git
 
-#### Características del Mapa Web
-- Centro inicial: San Carlos
-- Zoom inicial: 10
-- Zoom mínimo: 8
-- Zoom máximo: 16
-- Controles: Zoom, escala
-- Panel de información con leyenda
-- Diseño responsivo (móvil/tablet/escritorio)
-
----
-
-### Fase 5: Publicación
-
-#### GitHub Pages
 ```bash
 # Inicializar repositorio
 git init
+
+# Agregar archivos
 git add .
-git commit -m "Proyecto 3 - Mapa San Carlos"
 
-# Subir a GitHub
-git remote add origin https://github.com/[usuario]/mapa-san-carlos.git
+# Commit inicial
+git commit -m "Proyecto 3: Mapa de San Carlos"
+
+# Conectar con GitHub
+git remote add origin https://github.com/dylin1311/mapa_san_carlos.git
+
+# Subir cambios
 git push -u origin main
-
-# Activar GitHub Pages
-# Settings → Pages → Source: main branch
 ```
 
-**URL resultante:** `https://[usuario].github.io/mapa-san-carlos/`
+#### 6.3 Activar GitHub Pages
+
+1. Ir a repositorio en GitHub
+2. `Settings` → `Pages`
+3. Source: `Deploy from a branch`
+4. Branch: `main` / `root`
+5. Save
+
+**URL resultante:** [https://dylin1311.github.io/mapa-san-carlos/](https://dylin1311.github.io/mapa-san-carlos/)
 
 ---
 
 ## 📈 Estadísticas del Proyecto
 
-### Capas Procesadas
-- **Total de capas:** 25
-- **Capas base:** 7
-- **Capas generadas:** 2 (DEM, hillshade)
-- **Capas de OSM:** 10
-- **Capas recortadas:** 6
+### Datos Procesados
 
-### Elementos Cartográficos
-- **Puntos de elevación:** 7,504
-- **Ríos:** 68
-- **Carreteras:** 251 segmentos
-- **Poblados principales:** 10
-- **Poblados:** 271
-- **Distritos:** 13
-- **Servicios (estimado):** 200+
-- **Comercios (estimado):** 300+
+| Tipo de Dato | Cantidad |
+|--------------|----------|
+| Puntos de elevación | 7,504 |
+| Ríos | 68 |
+| Distritos | 13 |
+| Capas de servicios | 10 |
+| Capas totales en mapa | 18 |
+| Rango de elevación | 8.5 m - 2,264 m |
+| Niveles de zoom | 9 (8-16) |
+| Resolución DEM | ~30 m |
 
-### Especificaciones Técnicas
-- **Proyección:** WGS 84 (EPSG:4326)
-- **Resolución DEM:** 30 metros
-- **Formato tiles:** PNG 256x256px
-- **Niveles de zoom:** 8-16
-- **Tamaño estimado tiles:** 500MB - 2GB
+### Archivos Generados
+
+| Archivo | Tamaño Aprox. | Descripción |
+|---------|---------------|-------------|
+| `dem_san_carlos.tif` | ~25 MB | DEM en escala de grises |
+| `dem_san_carlos_colored.tif` | ~75 MB | DEM coloreado |
+| `hillshade_san_carlos.tif` | ~25 MB | Relieve sombreado |
+| `san_carlos.mbtiles` | Variable | Tiles comprimidos |
+| Carpeta `tiles/` | Variable | Tiles PNG expandidos |
 
 ---
 
 ## 🛠️ Herramientas Utilizadas
 
-### Software GIS
-- **QGIS 3.44** (Solothurn) - Procesamiento de datos espaciales
-  - TIN Interpolation - Generación del DEM
-  - Hillshade - Relieve sombreado
-  - Clip - Recorte de capas
-  - Export - Conversión de formatos
-
-### Descarga de Datos
-- **Overpass Turbo** - Consultas a OpenStreetMap
-- **Overpass API** - Extracción de datos OSM
-
-### Generación de Tiles
-- **TileMill 0.10.1** - Diseño cartográfico y generación de tiles
-
-### Desarrollo Web
-- **Leaflet.js 1.9.4** - Librería de mapas
-- **Visual Studio Code** - Editor de código
-- **Git** - Control de versiones
-- **GitHub Pages** - Hosting web
-
-### Recursos de Diseño
-- **Maki Icons** (Mapbox) - Íconos para puntos de interés
-
----
-
-## 🎨 Paleta de Colores
-
-### Elementos Naturales
-- **Agua (ríos):** #4a9fd6 (azul medio)
-- **Parques:** #8fbf8f (verde claro)
-- **Zonas verdes:** #b8f5b8 (verde muy claro)
-- **Elevación baja:** #d7f4d7 (verde pálido)
-- **Elevación media:** #ffffb2 (amarillo)
-- **Elevación alta:** #bd7526 (marrón)
-- **Elevación muy alta:** #ffffff (blanco)
-
-### Infraestructura
-- **Carreteras nacionales:** #fdb863 (amarillo/naranja)
-- **Carreteras cantonales:** #fd8d3c (naranja)
-- **Caminos vecinales:** #999999 (gris)
-- **Límites administrativos:** #000000 (negro)
-
-### Servicios (Íconos)
-- **Hospitales:** #d7191c (rojo intenso)
-- **Escuelas:** #4575b4 (azul)
-- **Bancos:** #238b45 (verde)
-- **Hoteles:** #91bfdb (azul claro)
-- **Gasolineras:** #fee090 (amarillo claro)
-- **Comercios:** #c994c7 (púrpura)
+| Software | Uso |
+|----------|-----|
+| MapWindow | Análisis espacial y recorte de capas |
+| QGIS | Conversión GeoJSON → Shapefile |
+| GDAL | Generación de DEM y hillshade |
+| Overpass Turbo | Descarga de datos OpenStreetMap |
+| TileMill | Diseño cartográfico y generación de tiles |
+| Leaflet.js | Visualización web interactiva |
+| Python | Conversión MBTiles → PNG tiles |
+| Git/GitHub | Control de versiones y hosting |
+| GitHub Pages | Publicación web |
 
 ---
 
 ## 📚 Referencias
 
-### Datos Geográficos
-- Instituto Geográfico Nacional de Costa Rica (IGN)
-- OpenStreetMap Contributors
-- SRTM Digital Elevation Data
+### Datos
+- Instituto Geográfico Nacional (IGN) de Costa Rica
+- [OpenStreetMap](https://www.openstreetmap.org/copyright)
+- [Overpass API](https://overpass-turbo.eu/)
 
-### Documentación Técnica
-- TileMill Documentation: https://tilemill-project.github.io/tilemill/
-- Leaflet Documentation: https://leafletjs.com/
-- Overpass API Documentation: https://wiki.openstreetmap.org/wiki/Overpass_API
-- CartoCSS Documentation: https://cartocss.readthedocs.io/
-
-### Recursos de Diseño
-- Maki Icons: https://labs.mapbox.com/maki-icons/
-- ColorBrewer: https://colorbrewer2.org/
+### Software
+- [MapWindow GIS](https://www.mapwindow.org/)
+- [QGIS](https://qgis.org/)
+- [GDAL](https://gdal.org/)
+- [TileMill](https://tilemill-project.github.io/tilemill/)
+- [Leaflet.js](https://leafletjs.com/)
 
 ---
 
-## 📄 Archivos Entregables
+## 🚀 Cómo Usar Este Proyecto
 
-### Documentación
-- ✅ README.md (este archivo)
-- ✅ Lista de capas con metadatos
+### Requisitos Previos
+- Navegador web moderno (Chrome, Firefox, Safari, Edge)
+- Conexión a internet
 
-### Código
-- ✅ tilemill_style.mss (estilos CartoCSS)
-- ✅ index.html (página web del mapa)
+### Visualización
 
-### Datos (No incluidos por tamaño)
-- Shapefiles procesados
-- DEM y hillshade generados
-- Tiles exportados
-- Proyecto de TileMill
+Acceder a: [Mapa San Carlos](https://dylin1311.github.io/mapa-san-carlos/)
 
 ---
 
-## 🚀 Instrucciones de Uso
+## 📄 Licencia
 
-### Para Visualizar el Mapa
-1. Visitar: [URL del mapa publicado]
-2. Usar controles de zoom (+/-)
-
-
----
-
-## 📧 Contacto
-
-**Dylan Cachón** - dychacon@estudiantec.cr 
-**Victoria Sandí** - vsandi@estudiantec.cr
-
-**Curso:** Sistemas de Información Geográfica  
-**Institución:** Tecnológico de Costa Rica  
-**Fecha:** 8 de Diciembre 2025
-
----
-
-## 📜 Licencia
-
-Este proyecto fue desarrollado con fines académicos para el curso de Sistemas de Información Geográfica del Tecnológico de Costa Rica.
+Este proyecto fue desarrollado con fines académicos para el Tecnológico de Costa Rica.
 
 **Datos:**
-- Capas base IGN: Uso académico permitido
-- Datos OpenStreetMap: © OpenStreetMap contributors, ODbL
-- Datos brindados por el profesor mediante TecDigital
-- Íconos Maki: © Mapbox, licencia BSD
+- OpenStreetMap: © OpenStreetMap contributors, ODbL 1.0
+- IGN Costa Rica: Datos públicos del Instituto Geográfico Nacional
+
+**Código:**
+- Desarrollado por Dylan Chacón y Victoria Sandí
+- Libre para uso educativo
 
 ---
 
-**Última actualización:** Diciembre 2025
+**Fecha de entrega:** 08/12/2025  
+**Proyecto 3 - Sistemas de Información Geográfica**  
+**Tecnológico de Costa Rica - 2025**
