@@ -434,10 +434,7 @@ mapa_san_carlos/
 │   ├── 10/
 │   └── ... (hasta 16)
 ├── README.md
-├── tilemill_style.mss
-└── docs/
-    └── [documentación adicional]
-```
+├── tilemill_style.mss     
 
 #### 6.2 Comandos Git
 
